@@ -1,7 +1,7 @@
-﻿using E_CommerceAPI.Entities;
+﻿using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace E_CommerceAPI.Data
+namespace Infrastructure.Data
 {
     public class StoreContext : DbContext
     {
@@ -10,5 +10,7 @@ namespace E_CommerceAPI.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductBrand> ProductBrands { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
     }
 }
