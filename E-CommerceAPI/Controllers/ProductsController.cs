@@ -24,7 +24,7 @@ namespace E_CommerceAPI.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        public async Task<ActionResult<List<Product>>> GetProducts()    
         {
             var spec = new ProductsWithTypesAndBrandsSpecification();
 
@@ -37,7 +37,9 @@ namespace E_CommerceAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            return await _productRepo.GetByIdAsync(id);
+            var spec = new ProductsWithTypesAndBrandsSpecification(id);
+
+            return await _productRepo.GetEntityWithSpec(spec);
         }
 
       //  [Cached(600)]

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Core.Specifications
 {
-    public class BaseSpecifcation<T> : ISpecification<T>
+    public class BaseSpecification<T> : ISpecification<T>
     {
-        public BaseSpecifcation()
+        public BaseSpecification()
         {
         }
 
-        public BaseSpecifcation(Expression<Func<T, bool>> criteria)
+        public BaseSpecification(Expression<Func<T, bool>> criteria)
         {
             Criteria = criteria;
         }
@@ -21,7 +21,7 @@ namespace Core.Specifications
         public Expression<Func<T, bool>> Criteria { get; }
 
         public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
-
+          
 
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {
