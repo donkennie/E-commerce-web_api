@@ -1,7 +1,9 @@
 using Core.Interfares;
+using E_CommerceAPI.Errors;
 using E_CommerceAPI.Helpers;
 using E_CommerceAPI.Middleware;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,25 @@ builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
     opt.UseSqlServer(connectionString);
+});
+
+builder.Services.Configure<ApiBehaviorOptions>(options => // Improving the validation error responses for the controller
+{
+    options.InvalidModelStateResponseFactory = actionContext =>
+    {
+        var errors = actionContext.ModelState
+             .Where(e => e.Value.Errors.Count > 0)
+             .SelectMany(x => x.Value.Errors)
+             .Select(x => x.ErrorMessage).ToArray();
+
+        var errorResponse = new ApiValidationErrorResponse
+        {
+            Errors = errors
+        };
+
+        return new BadRequestObjectResult(errorResponse);   
+
+    };
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

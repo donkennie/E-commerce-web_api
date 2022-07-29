@@ -5,7 +5,7 @@ namespace E_CommerceAPI.Controllers
 {
   
         [Route("errors/{code}")]
-       // [ApiExplorerSettings(IgnoreApi = true)]
+       [ApiExplorerSettings(IgnoreApi = true)]
 
         public class ErrorController : BaseApiController
         {
@@ -16,4 +16,4 @@ namespace E_CommerceAPI.Controllers
         }
   
 }
-    
+  
