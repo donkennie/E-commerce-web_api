@@ -3,6 +3,7 @@ using Core.Entities;
 using Core.Interfares;
 using Core.Specifications;
 using E_CommerceAPI.DTOs;
+using E_CommerceAPI.Errors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_CommerceAPI.Controllers
@@ -36,11 +37,15 @@ namespace E_CommerceAPI.Controllers
 
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)] //this will help us to let the client know the endpoints available and what they would return kind of response they would get from the request
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
 
            var product = await _productRepo.GetEntityWithSpec(spec);
+
+            if (product == null) return NotFound(new ApiResponse(404));
 
             return _mapper.Map<Product, ProductToReturnDto>(product);
 
