@@ -37,10 +37,11 @@ namespace Core.Specifications
             }
         }*/
 
-        public ProductsWithTypesAndBrandsSpecification()//(int id) : base(x => x.Id == id)
+        public ProductsWithTypesAndBrandsSpecification(string sort)
         {
             AddInclude(x => x.ProductType);
             AddInclude(x => x.ProductBrand);
+            AddOrderBy(x => x.Name);
         }
 
         public ProductsWithTypesAndBrandsSpecification(int id) : base(x => x.Id == id)
